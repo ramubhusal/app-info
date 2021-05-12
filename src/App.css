@@ -1,0 +1,47 @@
+body {
+    margin: 10px !important;
+    overflow-y: 'scroll';
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: lightgreen;
+    border-radius: 10px;
+}
+
+.tableRowData {
+    font-size: 14px;
+    font-weight: normal;
+    height: fit-content !important;
+}
+
+.accordionText {
+    font-weight: 100 !important;
+    font-size: 14px;
+}
+
+.boldList {
+    font-weight: bold;
+}
+
+.windowCloseIcon {
+    float: right;
+}
+
+.windowCloseIcon:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.clickableTableCell:hover {
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.tableCopyIcon:hover {
+    color: skyblue;
+    cursor: pointer;
+}
