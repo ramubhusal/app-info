@@ -1,10 +1,10 @@
 import './App.css';
 import { Container, Grid, Card, Form, Segment } from 'semantic-ui-react';
 import AppListTable from './components/AppListTable';
-import ApplicationData from './ApplicationData';
 import { useEffect, useState } from 'react';
 import AppDetail from './components/AppDetail';
 import RightPanel from './components/RightPanel';
+import api from './api';
 
 function App() {
     const [appData, setAppData] = useState(null);
@@ -14,9 +14,31 @@ function App() {
     const [appID, setAppID] = useState(null);
 
     useEffect(() => {
-        setAppData(ApplicationData);
-        setAppDataConst(ApplicationData);
+        collectAppInfo();
     }, []);
+
+    function collectAppInfo() {
+        api.get('/appInfo/get').then((response) => {
+            let finalAppData = [];
+            response.data.forEach((appInfo) => {
+                let keywords = appInfo.name;
+                appInfo.detail.forEach((appInfoDetail) => {
+                    keywords += ', ' + appInfoDetail.db_name;
+                    keywords += ', ' + appInfoDetail.version_name;
+                });
+                finalAppData.push({
+                    id: appInfo.id,
+                    name: appInfo.name,
+                    keywords: keywords
+                });
+            });
+            
+            setAppData(finalAppData);
+            setAppDataConst(finalAppData);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
 
     function filterData(event) {
         let searchQuery = document.getElementById('searchApplication').value;
