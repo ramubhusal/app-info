@@ -15,7 +15,7 @@ const RightPanel = (props) => {
     }
 
     return (
-        <Segment fluid color='red'>
+        <Segment color='red'>
                 <Accordion styled fluid>
                 <Accordion.Title
                     active={activeIndex === 0}

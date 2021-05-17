@@ -1,20 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Tab, Icon } from 'semantic-ui-react';
 import AppDetailTable from './AppDetailTable';
-import appData from '../ApplicationData';
+import api from '../api';
+import AppListPlaceholder from './AppListPlaceholder';
 
 const AppDetail = (props) => {
-    const panes = [
-        {
-            menuItem: 'Tab 1', render: () => <Tab.Pane><AppDetailTable /></Tab.Pane>
-        },
-        {
-            menuItem: 'Tab 2', render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>
-        },
-        {
-            menuItem: 'Tab 3', render: () => <Tab.Pane>Tab 3 Content</Tab.Pane>
-        },
-    ];
+    const [tabs, setTabs] = useState(null);
+    const [header, setHeader] = useState(null);
+
+    useEffect(() => {
+        setTabs(null);
+        getAppDetail();
+    }, [props.appID])
+
+    async function getAppDetail() {
+        const data = {
+            app_id: props.appID
+        }
+        const res = await api.post('/appInfo/getDetail', data).catch((err) => {
+            console.log(err);
+        });
+
+        if (Object.keys(res.data).length > 0) {
+            const detailData = res.data.detail.map((item, index) => {
+                return {
+                    key: item.id,
+                    menuItem: item.version_name,
+                    render: () => {
+                        const rowData = item;
+                        return (
+                            <Tab.Pane><AppDetailTable rowData={rowData} /></Tab.Pane>
+                        )
+                    }
+                }
+            });
+
+            setHeader({
+                id: res.data.id,
+                name: res.data.name,
+            });
+
+            setTabs(detailData);
+        }
+    }
 
     function closeDetail(event) {
         props.setGlossaryOrDetail("g");
@@ -24,21 +52,23 @@ const AppDetail = (props) => {
         <Card fluid color='green'>
             <Card.Content>
                 {
-                    appData.filter((item) => {
-                        return item.id === parseInt(props.appID)
-                    }).map(item => {
-                        return (
-                            <Card.Header>
-                            {item.name}
-                            <Icon onClick={closeDetail} className="windowCloseIcon" name="window close" size="large" />
-                            </Card.Header>
-                        )
-                    })
+                    header && (
+                        <Card.Header>
+                        {header.name}
+                        <Icon onClick={closeDetail} className="windowCloseIcon" name="window close" size="large" />
+                        </Card.Header>
+                    )
                 }
             </Card.Content>
             <Card.Content>
                 <Card.Description>
-                    <Tab panes={panes} />
+                    {
+                        tabs === null ?
+                        <AppListPlaceholder />:
+                        <Tab panes={tabs}
+                            renderActiveOnly={true}
+                            defaultActiveIndex={0} />
+                    }
                 </Card.Description>
             </Card.Content>
         </Card>

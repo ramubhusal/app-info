@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Icon, Table } from 'semantic-ui-react';
+import AppCell from './AppCell';
 
 const TableRow = (props) => {
     const [iconName, setIconName] = useState('copy outline');
 
     const copyCodeToClipboard = (event) => {
-        const elmLink = event.target.parentElement.querySelector('a');
-        const elmPara = event.target.parentElement.querySelector('p');
-        (elmLink) ?
-        navigator.clipboard.writeText(elmLink.href) :
-        navigator.clipboard.writeText(elmPara.innerHTML)
+        const test = event.currentTarget.parentElement.querySelectorAll('td')[2].innerText;
+
+        navigator.clipboard.writeText(test);
         setIconName('check circle');
 
         setTimeout(() => {
@@ -25,15 +24,8 @@ const TableRow = (props) => {
             <Table.Cell collapsing>
                 {props.label}
             </Table.Cell>
-            <Table.Cell>
-                {
-                    props.url.indexOf('http') >= 0 ? 
-                    <a target="_blank" href={props.url}>
-                    {props.url}
-                    </a>
-                    :
-                    <p>{props.url}</p>
-                }
+            <Table.Cell className="appCell">
+                <AppCell urlData={props.url} />
             </Table.Cell>
             <Table.Cell collapsing onClick={copyCodeToClipboard} className="tableCopyIcon">
                 <Icon name={iconName} size="large" />

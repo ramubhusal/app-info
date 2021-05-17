@@ -9,7 +9,7 @@ const ApplicationInfo = new mongoose.Schema(
         create_ts: {type: String, required: false},
         update_uid: {type: String, required: false},
         update_ts: {type: String, required: false}
-    }, { collection : 'application_info' }
+    }, { collection : 'application_infos' }
 )
 
-module.exports = mongoose.model('application_info', ApplicationInfo);
+module.exports = mongoose.model('application_infos', ApplicationInfo);

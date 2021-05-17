@@ -19,7 +19,7 @@ const AppListTable = (props) => {
 
     return (
         <Table celled compact size="small" textAlign="center" striped>
-            <Table.Header>
+            <Table.Header className="tableHeaderData">
                 <Table.Row>
                 <Table.HeaderCell>#</Table.HeaderCell>
                 <Table.HeaderCell>APPLICATION NAME</Table.HeaderCell>
@@ -30,14 +30,14 @@ const AppListTable = (props) => {
                 {
                     (props.tableData !== null) && props.tableData.map((item, index) => {
                         if (index >= startCount && index < endCount) {
-                        return (
-                            <Table.Row className="tableRowData" id={item.id} >
-                                <Table.Cell collapsing>{item.id}</Table.Cell>
-                                <Table.Cell className="clickableTableCell" onClick={openAppDetail}>
-                                        {item.name}
-                                </Table.Cell>
-                            </Table.Row>
-                        )
+                            return (
+                                <Table.Row key={index} className="tableRowData" id={item.id} >
+                                    <Table.Cell collapsing>{item.id}</Table.Cell>
+                                    <Table.Cell className="clickableTableCell" onClick={openAppDetail}>
+                                            {item.name}
+                                    </Table.Cell>
+                                </Table.Row>
+                            )
                         }
                     })
                 }
@@ -46,7 +46,13 @@ const AppListTable = (props) => {
             <Table.Footer>
                 <Table.Row>
                     <Table.HeaderCell colSpan='2'>
-                    <Pagination onPageChange={(event, data) => renderData(event, data)} defaultActivePage={activePage} totalPages={pageCount} />
+                    <Pagination boundaryRange={0}
+                        onPageChange={(event, data) => renderData(event, data)}
+                        defaultActivePage={activePage}
+                        siblingRange={1}
+                        firstItem={true}
+                        lastItem={true}
+                        totalPages={pageCount} />
                     </Table.HeaderCell>
                 </Table.Row>
             </Table.Footer>

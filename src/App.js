@@ -24,7 +24,6 @@ function App() {
                 let keywords = appInfo.name;
                 appInfo.detail.forEach((appInfoDetail) => {
                     keywords += ', ' + appInfoDetail.db_name;
-                    keywords += ', ' + appInfoDetail.version_name;
                 });
                 finalAppData.push({
                     id: appInfo.id,
@@ -35,6 +34,7 @@ function App() {
             
             setAppData(finalAppData);
             setAppDataConst(finalAppData);
+            console.log("finalAppData", finalAppData);
         }).catch((err) => {
             console.log(err);
         })
@@ -50,7 +50,7 @@ function App() {
         
         setAppData(filteredData);
         // const minPage = Math.min([...filteredData.map((item) => (item.id))]);
-        // setActivePage(1);
+        setActivePage(1);
     }
 
     return (
@@ -66,7 +66,7 @@ function App() {
 
                 <Grid.Row columns={2}>
                     <Grid.Column width={5}>
-                        <Segment fluid color='red'>
+                        <Segment color='red'>
                             <Form>
                                 <Form.Field>
                                 <label>Search:</label>

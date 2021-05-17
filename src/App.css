@@ -45,3 +45,13 @@ body {
     color: skyblue;
     cursor: pointer;
 }
+
+.tableHeaderData {
+    font-size: 14px;
+    font-weight: 'bolder' !important;
+}
+
+.appCell {
+    max-width: 100px;
+    overflow-x: auto;
+}

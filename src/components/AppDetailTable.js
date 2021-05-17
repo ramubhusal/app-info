@@ -1,46 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'semantic-ui-react';
 import TableRow from './TableRow';
 
 const AppDetailTable = (props) => {
     const tableRow = [
         {
-            url: "https://dev01.farrms.us/TRMTracker_MMWEC/trmclient/",
+            url: props.rowData.url,
             icon: "chrome",
             label: "URL"
         },
         {
-            url: "http://dev.farrms.us:18080/pioneer/products/trmtracker/branches/TRMTracker_MMWEC/Ver_4.2.000",
+            url: props.rowData.remote_url,
             icon: "git square",
             label: "SVN or GIT"
         },
         {
-            url: "SG-D-SQL01.farrms.us,2033",
+            url: props.rowData.db_server,
             icon: "database",
             label: "DB Server\\Instance"
         },
         {
-            url: "TRMTracker_MMWEC",
+            url: props.rowData.db_name,
             icon: "file text outline",
             label: "DB Name"
         },
         {
-            url: "SVN Commit",
+            url: props.rowData.branching_info,
             icon: "code branch",
             label: "Branching Info"
         },
         {
-            url: "From /branches/TRMTracker_MMWEC/Ver_4.1.000, revision 67517 on March 29,2017 4:52:32 AM NP",
+            url: props.rowData.change_intro_method,
             icon: "exchange",
             label: "Change Introduction Method"
         },
         {
-            url: "Accuweather Bloomberg ExcelSnapshot ICE Forward Price",
+            url: props.rowData.ssis_info,
             icon: "newspaper",
             label: "SSIS Info"
         },
         {
-            url: "PHP(5.6.27), IE(10,11)/Chrome",
+            url: props.rowData.supported_browser,
             icon: "globe",
             label: "Supported Browser"
         },
@@ -58,7 +58,7 @@ const AppDetailTable = (props) => {
             </Table.Header>
             <Table.Body>
                 {
-                    tableRow.map(item => <TableRow {...item}/>)
+                    tableRow.map((item, index) => <TableRow key={index} {...item}/>)
                 }
             </Table.Body>
         </Table>
